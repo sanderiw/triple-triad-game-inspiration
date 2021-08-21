@@ -53,6 +53,8 @@ class Game {
         this.player2Hands = [];
         this.player1Points = initialPointsOfEachPlayer;
         this.player2Points = initialPointsOfEachPlayer;
+        this.currentCard = null;
+        this.currentlyPlaying = "player 1";
     }
 
     createDeck() {
@@ -88,81 +90,135 @@ class Game {
         this.player2Hands.forEach(elem => elem.color = player2Color);
     }
 
-    startGame() {
-        this.createDeck();
-        this.shuffleCards();
-        this.distributeCards();
+    
+    player1Turn(cardPosition, row, column) {
+        let rowAndColumnIndex = [0, 1, 2]
+        if (rowAndColumnIndex.includes(row) && rowAndColumnIndex.includes(column)) {
+          if (typeof this.board[row][column] === "number") {
+            if (this.player1Hands.includes(this.player1Hands[cardPosition])) {
+                this.currentCard = this.player1Hands[cardPosition]
+                this.board[row][column] = this.currentCard
+                this.player1Hands.splice(this.player1Hands.indexOf(this.currentCard), 1);
+                this.currentCard = null;
+                this.currentlyPlaying = "player 2"
+            } else {
+                alert("You don't have this card on your deck");
+            }
+        } else {
+            alert("This grid is not empty");
+        }  
+        } else {
+            alert("You must input a valid index")
+        }
+    }
+    
+    player2Turn(cardPosition, row, column) { 
+        let rowAndColumnIndex = [0, 1, 2]
+        if (rowAndColumnIndex.includes(row) && rowAndColumnIndex.includes(column)) {
+          if (typeof this.board[row][column] === "number") {
+            if (this.player2Hands.includes(this.player2Hands[cardPosition])) {
+                this.currentCard = this.player2Hands[cardPosition]
+                this.board[row][column] = this.currentCard
+                this.player2Hands.splice(this.player2Hands.indexOf(this.currentCard), 1);
+                this.currentCard = null;
+                this.currentlyPlaying = "player 1"
+            } else {
+                alert("You don't have this card on your deck");
+            }
+        } else {
+            alert("This grid is not empty");
+        }  
+        } else {
+            alert("You must input a valid index")
+        }
+    }
+    
+    play(cardPosition, row, column) {
+        if (this.currentlyPlaying === "player 1") {
+            this.player1Turn(cardPosition, row, column);
+        } else {
+            this.player2Turn(cardPosition, row, column);
+        }
     }
 
-    player1move(card, row, column) {
-        if (typeof this.board[row][column] === "number") {
-            if (this.player1Hands.includes(card)) {
-                this.board[row][column] = card
-                this.player1Hands.splice(this.player1Hands.indexOf(card), 1);
-            } else {
-                console.log("You don't have this card on your deck");
-                return;
-            }
-            
-        } else {
-            console.log("This grid is not empty");
-            return;
-        }
-        
-    }
 
-    player2move(card, row, column) {
-        if (typeof this.board[row][column] === "number") {
-            if (this.player2Hands.includes(card)) {
-                this.board[row][column] = card
-                this.player2Hands.splice(this.player2Hands.indexOf(card), 1);
-            } else {
-                console.log("You don't have this card on your deck");
-                return;
-            }
-            
-        } else {
-            console.log("This grid is not empty");
-            return;
+    checkAdjacentGrids(row, column) {
+        // Check adjacent grids
+        const adjacentGrids = [];
+        const rowAndColumnIndex = [0, 1, 2];
+
+        if (rowAndColumnIndex.includes(row - 1)) {
+            adjacentGrids.push([row - 1, column]);
         }
-        
+        if (rowAndColumnIndex.includes(column + 1)) {
+            adjacentGrids.push([row, column + 1]);
+        }
+        if (rowAndColumnIndex.includes(row + 1)) {
+            adjacentGrids.push([row + 1, column]);
+        }
+        if (rowAndColumnIndex.includes(column - 1)) {
+            adjacentGrids.push([row, column - 1]);
+        }
+
+        return adjacentGrids;
     }
+    
+    checkIfCardsAdjacent(adjacentGrids) {
+        const adjacentCards = [];
+        adjacentGrids.forEach((elem) => {
+            if (typeof this.board[elem[0]][elem[1]] !== "number") {
+                adjacentCards.push(this.board[elem[0]][elem[1]])
+            }
+        })
+        return adjacentCards;
+    }
+        
 
     checkColors() {
         // Check the colors of the cards
     }
-
-    checkAdjacent() {
-        // Check if cards are adjacent
-    }
-
+    
+    
     checkRanks() {
-
+        
     }
-
+    
     changeColors() {
         //Change colors if the current cards rank is greater than the placed card
     }
-
+    
     checkIfAllGridsTaken() {
         // Check if all grids are taken
     }
-
-    play() {
+    
+    flowOfTheGame() {
         // A for loop or do while loop until a condition is met: All nine grids taken
+        const numberOfTurns = 9;
+        for (let i = 0; i < numberOfTurns; i++) {
+            if (i % 2 === 0) {
+                console.log("Player 1 turn")
+                this.player1Turn();
+            } else {
+                console.log("Player 2 turn")
+                this.player2Turn();
+            }
+        }
+    }
+    
+    playGame() {
+        this.createDeck();
+        this.shuffleCards();
+        this.distributeCards();
+        //this.flowOfTheGame();
     }
 
 }
 
 // Creating an array of cards from the card class
 
-let game = new Game(cardsDatabase);
-game.startGame()
-console.log(game.deck);
-game.player1move(game.player1Hands[1], 0, 0);
-console.log(game.board);
-game.player1move(game.player1Hands[0], 1, 0);
-console.log(game.board);
+// let game = new Game(cardsDatabase);
+// game.playGame();
+
 
 
 
