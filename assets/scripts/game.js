@@ -101,6 +101,10 @@ class Game {
                 this.currentPosition = [row, column];
                 this.board[row][column] = this.currentCard;
                 this.player1Hands.splice(this.player1Hands.indexOf(this.currentCard), 1);
+                this.compareMultipleCards();
+                if (this.checkIfAllGridsTaken()) {
+                    alert("End of the game")
+                }
                 this.currentlyPlaying = "player 2";
             } else {
                 alert("You don't have this card on your deck");
@@ -122,6 +126,10 @@ class Game {
                 this.currentPosition = [row, column];
                 this.board[row][column] = this.currentCard;
                 this.player2Hands.splice(this.player2Hands.indexOf(this.currentCard), 1);
+                this.compareMultipleCards();
+                if (this.checkIfAllGridsTaken()) {
+                    alert("End of the game")
+                }
                 this.currentlyPlaying = "player 1";
             } else {
                 alert("You don't have this card on your deck");
@@ -164,7 +172,7 @@ class Game {
         return adjacentGrids;
     }
     
-    returnCardsAdjacent(adjacentGrids) {
+    checkAdjacentCardsPosition(adjacentGrids) {
         const adjacentCardsPosition = [];
         adjacentGrids.forEach((elem) => {
             if (typeof this.board[elem[0]][elem[1]] !== "number") {
@@ -177,13 +185,13 @@ class Game {
 
     checkOppositeColors(adjacentCardsPosition) {
         // Check the colors of the cards
-        const oppositeColorCards = [];
+        const oppositeColorCardsPosition = [];
         adjacentCardsPosition.forEach((position) => {
             if(this.currentCard.color !== this.board[position[0]][position[1]].color) {
-                oppositeColorCards.push([position[0], position[1]]);
+                oppositeColorCardsPosition.push([position[0], position[1]]);
             } 
         })
-        return oppositeColorCards;
+        return oppositeColorCardsPosition;
     }
 
     checkIfCurrentCardWins(currentCardPosition, placedCardPosition) {
@@ -196,7 +204,7 @@ class Game {
         const placedCard = this.board[placedCardRow][placedCardColumn];
         const currentCard = this.board[currentCardRow][currentCardColumn];
         
-        let points = 0;
+        let points = null;
         let condition = null;
 
         if (currentCardRow > placedCardRow) {
@@ -219,30 +227,60 @@ class Game {
 
     }
     
+    changeColors(position) {
+        //Change colors if the current cards rank is greater than the placed card
+        if (this.currentCard.color === "blue") {
+            this.board[position[0]][position[1]].color = "blue";
+        } else {
+            this.board[position[0]][position[1]].color = "red";
+        }
+    }
     
-    checkRanks(oppositeColorCards) {
+    compareMultipleCards() {
         //Check the matching sides ranks of the opposite side cards.
-        oppositeColorCards.forEach((position) => {
-            
-            
+        const row = this.currentPosition[0];
+        const column = this.currentPosition[1];
 
+        const adjacentGrids = this.checkAdjacentGrids(row, column);
+        const adjacentCardsPosition = this.checkAdjacentCardsPosition(adjacentGrids);
+        const oppositeColorCardsPosition = this.checkOppositeColors(adjacentCardsPosition);
+
+        
+        oppositeColorCardsPosition.forEach((position) => {
+            if (this.checkIfCurrentCardWins(this.currentPosition, position)) {
+                this.changeColors(position);
+                if (this.currentlyPlaying === "player 1") {
+                    this.player1Points++;
+                    this.player2Points--;
+                } else {
+                    this.player2Points++;
+                    this.player1Points--;
+                }
+                console.log(position);
+            }
         })
         
         
     }
     
-    changeColors(position) {
-        //Change colors if the current cards rank is greater than the placed card
-        if (this.currentCard.color === "blue") {
-            this.board[position[0]][position[1]].color = "red";
-        } else {
-            this.board[position[0]][position[1]].color = "blue";
-        }
-    }
     
     checkIfAllGridsTaken() {
         // Check if all grids are taken
+        let counter = 0;
+        this.board.forEach((row) => {
+            row.forEach((elem) => {
+                if (typeof elem === "number") {
+                    counter++;
+                }
+            })
+        })
+        if (counter === 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
+    
     
     flowOfTheGame() {
         // A for loop or do while loop until a condition is met: All nine grids taken
@@ -267,11 +305,7 @@ class Game {
 
 }
 
-// Creating an array of cards from the card class
-
-// let game = new Game(cardsDatabase);
-// game.playGame();
-
+//
 
 
 
