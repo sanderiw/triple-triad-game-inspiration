@@ -93,14 +93,15 @@ class Game {
 
     
     player1Turn(cardPosition, row, column) {
-        let rowAndColumnIndex = [0, 1, 2]
+        let rowAndColumnIndex = [0, 1, 2];
         if (rowAndColumnIndex.includes(row) && rowAndColumnIndex.includes(column)) {
           if (typeof this.board[row][column] === "number") {
             if (this.player1Hands.includes(this.player1Hands[cardPosition])) {
-                this.currentCard = this.player1Hands[cardPosition]
-                this.board[row][column] = this.currentCard
+                this.currentCard = this.player1Hands[cardPosition];
+                this.currentPosition = [row, column];
+                this.board[row][column] = this.currentCard;
                 this.player1Hands.splice(this.player1Hands.indexOf(this.currentCard), 1);
-                this.currentlyPlaying = "player 2"
+                this.currentlyPlaying = "player 2";
             } else {
                 alert("You don't have this card on your deck");
             }
@@ -108,19 +109,20 @@ class Game {
             alert("This grid is not empty");
         }  
         } else {
-            alert("You must input a valid index")
+            alert("You must input a valid index");
         }
     }
     
     player2Turn(cardPosition, row, column) { 
-        let rowAndColumnIndex = [0, 1, 2]
+        let rowAndColumnIndex = [0, 1, 2];
         if (rowAndColumnIndex.includes(row) && rowAndColumnIndex.includes(column)) {
           if (typeof this.board[row][column] === "number") {
             if (this.player2Hands.includes(this.player2Hands[cardPosition])) {
-                this.currentCard = this.player2Hands[cardPosition]
-                this.board[row][column] = this.currentCard
+                this.currentCard = this.player2Hands[cardPosition];
+                this.currentPosition = [row, column];
+                this.board[row][column] = this.currentCard;
                 this.player2Hands.splice(this.player2Hands.indexOf(this.currentCard), 1);
-                this.currentlyPlaying = "player 1"
+                this.currentlyPlaying = "player 1";
             } else {
                 alert("You don't have this card on your deck");
             }
@@ -128,7 +130,7 @@ class Game {
             alert("This grid is not empty");
         }  
         } else {
-            alert("You must input a valid index")
+            alert("You must input a valid index");
         }
     }
     
@@ -184,16 +186,58 @@ class Game {
         return oppositeColorCards;
     }
 
+    checkIfCurrentCardWins(currentCardPosition, placedCardPosition) {
+        const placedCardRow = placedCardPosition[0];
+        const placedCardColumn = placedCardPosition[1];
+        
+        const currentCardRow = currentCardPosition[0];
+        const currentCardColumn = currentCardPosition[1];
+
+        const placedCard = this.board[placedCardRow][placedCardColumn];
+        const currentCard = this.board[currentCardRow][currentCardColumn];
+        
+        let points = 0;
+        let condition = null;
+
+        if (currentCardRow > placedCardRow) {
+            points = currentCard.top - placedCard;
+        } else if (currentCardRow < placedCardRow) {
+            points = currentCard.bottom - placedCard.top;
+        } else if (currentCardColumn > placedCardColumn) {
+            points = currentCard.left - placedCard.rigth;
+        } else if (currentCardColumn < placedCardColumn) {
+            points = currentCard.rigth - placedCard.left;
+        }
+
+        if (points > 0) {
+            condition = true;
+        } else {
+            condition = false;
+        }
+
+        return condition;
+
+    }
     
     
-    
-    checkRanks() {
+    checkRanks(oppositeColorCards) {
         //Check the matching sides ranks of the opposite side cards.
+        oppositeColorCards.forEach((position) => {
+            
+            
+
+        })
+        
         
     }
     
-    changeColors() {
+    changeColors(position) {
         //Change colors if the current cards rank is greater than the placed card
+        if (this.currentCard.color === "blue") {
+            this.board[position[0]][position[1]].color = "red";
+        } else {
+            this.board[position[0]][position[1]].color = "blue";
+        }
     }
     
     checkIfAllGridsTaken() {
