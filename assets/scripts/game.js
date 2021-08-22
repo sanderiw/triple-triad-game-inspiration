@@ -55,6 +55,7 @@ class Game {
         this.player2Points = initialPointsOfEachPlayer;
         this.currentCard = null;
         this.currentlyPlaying = "player 1";
+        this.currentPosition = null;
     }
 
     createDeck() {
@@ -99,7 +100,6 @@ class Game {
                 this.currentCard = this.player1Hands[cardPosition]
                 this.board[row][column] = this.currentCard
                 this.player1Hands.splice(this.player1Hands.indexOf(this.currentCard), 1);
-                this.currentCard = null;
                 this.currentlyPlaying = "player 2"
             } else {
                 alert("You don't have this card on your deck");
@@ -120,7 +120,6 @@ class Game {
                 this.currentCard = this.player2Hands[cardPosition]
                 this.board[row][column] = this.currentCard
                 this.player2Hands.splice(this.player2Hands.indexOf(this.currentCard), 1);
-                this.currentCard = null;
                 this.currentlyPlaying = "player 1"
             } else {
                 alert("You don't have this card on your deck");
@@ -163,23 +162,33 @@ class Game {
         return adjacentGrids;
     }
     
-    checkIfCardsAdjacent(adjacentGrids) {
-        const adjacentCards = [];
+    returnCardsAdjacent(adjacentGrids) {
+        const adjacentCardsPosition = [];
         adjacentGrids.forEach((elem) => {
             if (typeof this.board[elem[0]][elem[1]] !== "number") {
-                adjacentCards.push(this.board[elem[0]][elem[1]])
+                adjacentCardsPosition.push([elem[0], elem[1]])
             }
         })
-        return adjacentCards;
+        return adjacentCardsPosition;
     }
         
 
-    checkColors() {
+    checkOppositeColors(adjacentCardsPosition) {
         // Check the colors of the cards
+        const oppositeColorCards = [];
+        adjacentCardsPosition.forEach((position) => {
+            if(this.currentCard.color !== this.board[position[0]][position[1]].color) {
+                oppositeColorCards.push([position[0], position[1]]);
+            } 
+        })
+        return oppositeColorCards;
     }
+
+    
     
     
     checkRanks() {
+        //Check the matching sides ranks of the opposite side cards.
         
     }
     
