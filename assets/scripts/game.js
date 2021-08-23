@@ -102,9 +102,7 @@ class Game {
                 this.board[row][column] = this.currentCard;
                 this.player1Hands.splice(this.player1Hands.indexOf(this.currentCard), 1);
                 this.compareMultipleCards();
-                if (this.checkIfAllGridsTaken()) {
-                    alert("End of the game")
-                }
+                this.checkIfAllGridsTaken();
                 this.currentlyPlaying = "player 2";
             } else {
                 alert("You don't have this card on your deck");
@@ -127,9 +125,7 @@ class Game {
                 this.board[row][column] = this.currentCard;
                 this.player2Hands.splice(this.player2Hands.indexOf(this.currentCard), 1);
                 this.compareMultipleCards();
-                if (this.checkIfAllGridsTaken()) {
-                    alert("End of the game")
-                }
+                this.checkIfAllGridsTaken();
                 this.currentlyPlaying = "player 1";
             } else {
                 alert("You don't have this card on your deck");
@@ -263,6 +259,15 @@ class Game {
         
     }
     
+    endMessage() {
+        if (this.player1Points > this.player2Points) {
+            alert("Player 1 Won");
+        } else if (this.player1Points < this.player2Points) {
+            alert("Player 2 Won");
+        } else {
+            alert("Draw");
+        }
+    }
     
     checkIfAllGridsTaken() {
         // Check if all grids are taken
@@ -275,6 +280,9 @@ class Game {
             })
         })
         if (counter === 0) {
+            alert("End of the Game. Thanks for playing");
+            alert(`Player One (Blue) has ${game.player1Points} points and Player Two (Red) has ${game.player2Points} points`);
+            this.endMessage();
             return true;
         } else {
             return false;
