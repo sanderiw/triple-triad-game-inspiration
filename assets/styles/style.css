@@ -1,0 +1,22 @@
+.tile {
+    height: 192px;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+.tile-row {
+    width: calc(160px * 3);
+}
+
+.player-hands {
+    height: calc(112px * 5);
+    width: 162px;
+}
+
+#player2-hands {
+    width: 300px;
+}
+
+#player1-hands {
+    width: 300px;
+}

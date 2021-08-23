@@ -304,7 +304,7 @@ class Game {
         }
     }
     
-    playGame() {
+    startGame() {
         this.createDeck();
         this.shuffleCards();
         this.distributeCards();
