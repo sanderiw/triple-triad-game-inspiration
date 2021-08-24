@@ -32,40 +32,39 @@
     </header>
 
     <div class="game-title">
-        <h1 class="m-5">Triple Triad</h1> 
+        <h1>Triple Triad</h1> 
     </div>
-    <div>
+    <div class="">
+    <div class="board-area d-flex align-items-center">
         
-        <div class="board-area d-flex align-items-stretch">
-            
-            <div id="player2-hands" class="row tile-row d-flex flex-column justify-content-center align-items-center">
-                <div class="col border border-dark text-center player-hands"></div>
-            </div>
-            
-            <div id="main-board" class="row tile-row d-flex justify-content-center align-items-center">
-                <div class="col-4 border border-dark text-center tile">
-                    <p id="top" class="text-end me-2 my-0">9</p>
-                    <p class="text-end my-0"><span id="left" class="me-1">9</span> <span id="right">9</span></p>
-                    <p id="bottom" class="text-end me-2 my-0">9</p>
-                    <p id="card-name" class="card-name mt-3">card name</p>
-                </div>
-                <div class="col-4 border border-dark text-center tile"></div>
-                <div class="col-4 border border-dark text-center tile"></div>
-                <div class="col-4 border border-dark text-center tile"></div>
-                <div class="col-4 border border-dark text-center tile"></div>
-                <div class="col-4 border border-dark text-center tile"></div>
-                <div class="col-4 border border-dark text-center tile"></div>
-                <div class="col-4 border border-dark text-center tile"></div>
-                <div class="col-4 border border-dark text-center tile"></div>
-            </div>
-            
-            <div id="player1-hands" class="row tile-row d-flex flex-column justify-content-center align-items-center">
-                <div class="col border border-dark text-center player-hands"></div>
-            </div>
-            
+        <div id="player2-hands" class="row tile-row d-flex flex-column justify-content-center align-items-center player-hands">
+            <div class="col border border-dark text-center player2-hands-cards"></div>
+            <div class="col border border-dark text-center player2-hands-cards"></div>
+            <div class="col border border-dark text-center player2-hands-cards"></div>
+            <div class="col border border-dark text-center player2-hands-cards"></div>
+            <div class="col border border-dark text-center player2-hands-cards"></div>
         </div>
         
-
+        <div id="main-board" class="row tile-row d-flex justify-content-center align-items-center">
+            <div class="col-4 border border-dark text-center tile"></div>
+            <div class="col-4 border border-dark text-center tile"></div>
+            <div class="col-4 border border-dark text-center tile"></div>
+            <div class="col-4 border border-dark text-center tile"></div>
+            <div class="col-4 border border-dark text-center tile"></div>
+            <div class="col-4 border border-dark text-center tile"></div>
+            <div class="col-4 border border-dark text-center tile"></div>
+            <div class="col-4 border border-dark text-center tile"></div>
+            <div class="col-4 border border-dark text-center tile"></div>
+        </div>
+        
+        <div id="player1-hands" class="row tile-row d-flex flex-column justify-content-center align-items-center player-hands">
+            <div class="col border border-dark text-center player1-hands-cards"></div>
+            <div class="col border border-dark text-center player1-hands-cards"></div>
+            <div class="col border border-dark text-center player1-hands-cards"></div>
+            <div class="col border border-dark text-center player1-hands-cards"></div>
+            <div class="col border border-dark text-center player1-hands-cards"></div>
+        </div>
+    </div>  
     </div>
     
     <!-- Linking JS -->
