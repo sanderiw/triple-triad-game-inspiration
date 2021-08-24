@@ -22,6 +22,7 @@ const cardsDatabase = [
 ];
 
 class Card {
+    
     constructor(card) {
         this.id = card.id;
         this.top = card.rank[0];
@@ -37,9 +38,11 @@ class Card {
         const deconstructedCard = {id: this.id, rank: [this.top, this.right, this.bottom, this.left], color: this.color, name: this.name};
         return new Card(deconstructedCard);
     }
+
 }
 
 class Game {
+
     constructor(cardsDatabase) {
         const initialPointsOfEachPlayer = 5;
         this.cardsDatabase = cardsDatabase;
@@ -90,8 +93,170 @@ class Game {
         this.player2Hands = cardsToDistribute2.map(card => card.copyCard())
         this.player2Hands.forEach(elem => elem.color = player2Color);
     }
-
     
+    checkAdjacentGrids(row, column) {
+        // Check adjacent grids
+        const adjacentGrids = [];
+        const rowAndColumnIndex = [0, 1, 2];
+        
+        if (rowAndColumnIndex.includes(row - 1)) {
+            adjacentGrids.push([row - 1, column]);
+        }
+        if (rowAndColumnIndex.includes(column + 1)) {
+            adjacentGrids.push([row, column + 1]);
+        }
+        if (rowAndColumnIndex.includes(row + 1)) {
+            adjacentGrids.push([row + 1, column]);
+        }
+        if (rowAndColumnIndex.includes(column - 1)) {
+            adjacentGrids.push([row, column - 1]);
+        }
+        
+        return adjacentGrids;
+    }
+    
+    checkAdjacentCardsPosition(adjacentGrids) {
+        const adjacentCardsPosition = [];
+        adjacentGrids.forEach((elem) => {
+            if (typeof this.board[elem[0]][elem[1]] !== "number") {
+                adjacentCardsPosition.push([elem[0], elem[1]])
+            }
+        })
+        return adjacentCardsPosition;
+    }
+    
+    
+    checkOppositeColors(adjacentCardsPosition) {
+        // Check the colors of the cards
+        const oppositeColorCardsPosition = [];
+        adjacentCardsPosition.forEach((position) => {
+            if(this.currentCard.color !== this.board[position[0]][position[1]].color) {
+                oppositeColorCardsPosition.push([position[0], position[1]]);
+            } 
+        })
+        //console.log(oppositeColorCardsPosition);
+        return oppositeColorCardsPosition;
+    }
+    
+    checkIfCurrentCardWins(currentCardPosition, placedCardPosition) {
+        const placedCardRow = placedCardPosition[0];
+        const placedCardColumn = placedCardPosition[1];
+        
+        const currentCardRow = currentCardPosition[0];
+        const currentCardColumn = currentCardPosition[1];
+        
+        const placedCard = this.board[placedCardRow][placedCardColumn];
+        const currentCard = this.board[currentCardRow][currentCardColumn];
+        
+        let points = null;
+        let condition = null;
+        
+        if (currentCardRow > placedCardRow) {
+            points = currentCard.top - placedCard.bottom;
+        } else if (currentCardRow < placedCardRow) {
+            points = currentCard.bottom - placedCard.top;
+        } else if (currentCardColumn > placedCardColumn) {
+            points = currentCard.left - placedCard.right;
+        } else if (currentCardColumn < placedCardColumn) {
+            points = currentCard.right - placedCard.left;
+        }
+        
+        if (points > 0) {
+            condition = true;
+        } else {
+            condition = false;
+        }
+        
+        return condition;
+        
+    }
+    
+    changeColors(position) {
+        //Change colors if the current cards rank is greater than the placed card
+        if (this.currentCard.color === "blue") {
+            this.board[position[0]][position[1]].color = "blue";
+        } else {
+            this.board[position[0]][position[1]].color = "red";
+        }
+    }
+    
+    compareMultipleCards() {
+        //Check the matching sides ranks of the opposite side cards.
+        const row = this.currentPosition[0];
+        const column = this.currentPosition[1];
+        
+        const adjacentGrids = this.checkAdjacentGrids(row, column);
+        const adjacentCardsPosition = this.checkAdjacentCardsPosition(adjacentGrids);
+        const oppositeColorCardsPosition = this.checkOppositeColors(adjacentCardsPosition);
+        
+        oppositeColorCardsPosition.forEach((position) => {
+            if (this.checkIfCurrentCardWins(this.currentPosition, position)) {
+                this.changeColors(position);
+                if (this.currentlyPlaying === "player 1") {
+                    this.player1Points++;
+                    this.player2Points--;
+                } else {
+                    this.player2Points++;
+                    this.player1Points--;
+                }
+                console.log(position);
+            }
+        })
+    }
+    
+    /*
+    flowOfTheGame() {
+        // A for loop or do while loop until a condition is met: All nine grids taken
+        const numberOfTurns = 9;
+        for (let i = 0; i < numberOfTurns; i++) {
+            if (i % 2 === 0) {
+                console.log("Player 1 turn")
+                this.player1Turn();
+            } else {
+                console.log("Player 2 turn")
+                this.player2Turn();
+            }
+        }
+    }
+    */
+    
+    startGame() {
+        this.createDeck();
+        this.shuffleCards();
+        this.distributeCards();
+    }
+
+    endMessage() {
+        if (this.player1Points > this.player2Points) {
+            alert("Player 1 Won");
+        } else if (this.player1Points < this.player2Points) {
+            alert("Player 2 Won");
+        } else {
+            alert("Draw");
+        }
+    }
+
+    checkIfAllGridsTaken() {
+        // Check if all grids are taken
+        let counter = 0;
+        this.board.forEach((row) => {
+            row.forEach((elem) => {
+                if (typeof elem === "number") {
+                    counter++;
+                }
+            })
+        })
+        if (counter === 0) {
+            this.endMessage();
+            alert("End of the Game. Thanks for playing");
+            alert(`Player One (Blue) has ${game.player1Points} points and Player Two (Red) has ${game.player2Points} points`);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /*
     player1Turn(cardPosition, row, column) {
         let rowAndColumnIndex = [0, 1, 2];
         if (rowAndColumnIndex.includes(row) && rowAndColumnIndex.includes(column)) {
@@ -118,14 +283,61 @@ class Game {
     player2Turn(cardPosition, row, column) { 
         let rowAndColumnIndex = [0, 1, 2];
         if (rowAndColumnIndex.includes(row) && rowAndColumnIndex.includes(column)) {
+            if (typeof this.board[row][column] === "number") {
+                if (this.player2Hands.includes(this.player2Hands[cardPosition])) {
+                    this.currentCard = this.player2Hands[cardPosition];
+                    this.currentPosition = [row, column];
+                    this.board[row][column] = this.currentCard;
+                    this.player2Hands.splice(this.player2Hands.indexOf(this.currentCard), 1);
+                    this.compareMultipleCards();
+                    this.checkIfAllGridsTaken();
+                    this.currentlyPlaying = "player 1";
+                } else {
+                    alert("You don't have this card on your deck");
+                }
+            } else {
+                alert("This grid is not empty");
+            }  
+        } else {
+            alert("You must input a valid index");
+        }
+    }
+    */
+
+    player1Turn() {
+        const row = this.currentPosition[0];
+        const column = this.currentPosition[1];
+        let rowAndColumnIndex = [0, 1, 2];
+        if (rowAndColumnIndex.includes(row) && rowAndColumnIndex.includes(column)) {
           if (typeof this.board[row][column] === "number") {
-            if (this.player2Hands.includes(this.player2Hands[cardPosition])) {
-                this.currentCard = this.player2Hands[cardPosition];
-                this.currentPosition = [row, column];
+            if (this.player1Hands.includes(this.currentCard)) {
+                this.board[row][column] = this.currentCard;
+                this.player1Hands.splice(this.player1Hands.indexOf(this.currentCard), 1);
+                this.compareMultipleCards();
+                this.currentlyPlaying = "player 2";
+            } else {
+                alert("You don't have this card on your deck");
+            }
+        } else {
+            alert("This grid is not empty");
+        }  
+        } else {
+            alert("You must input a valid index");
+        }
+        this.currentCard = null;
+        this.currentPosition = null;
+    }
+    
+    player2Turn() {
+        const row = this.currentPosition[0];
+        const column = this.currentPosition[1];
+        let rowAndColumnIndex = [0, 1, 2];
+        if (rowAndColumnIndex.includes(row) && rowAndColumnIndex.includes(column)) {
+          if (typeof this.board[row][column] === "number") {
+            if (this.player2Hands.includes(this.currentCard)) {
                 this.board[row][column] = this.currentCard;
                 this.player2Hands.splice(this.player2Hands.indexOf(this.currentCard), 1);
                 this.compareMultipleCards();
-                this.checkIfAllGridsTaken();
                 this.currentlyPlaying = "player 1";
             } else {
                 alert("You don't have this card on your deck");
@@ -136,184 +348,16 @@ class Game {
         } else {
             alert("You must input a valid index");
         }
+        this.currentCard = null;
+        this.currentPosition = null;
     }
-    
+
     play(cardPosition, row, column) {
         if (this.currentlyPlaying === "player 1") {
-            this.player1Turn(cardPosition, row, column);
+            this.player1Turn();
         } else {
             this.player2Turn(cardPosition, row, column);
         }
     }
 
-
-    checkAdjacentGrids(row, column) {
-        // Check adjacent grids
-        const adjacentGrids = [];
-        const rowAndColumnIndex = [0, 1, 2];
-
-        if (rowAndColumnIndex.includes(row - 1)) {
-            adjacentGrids.push([row - 1, column]);
-        }
-        if (rowAndColumnIndex.includes(column + 1)) {
-            adjacentGrids.push([row, column + 1]);
-        }
-        if (rowAndColumnIndex.includes(row + 1)) {
-            adjacentGrids.push([row + 1, column]);
-        }
-        if (rowAndColumnIndex.includes(column - 1)) {
-            adjacentGrids.push([row, column - 1]);
-        }
-
-        return adjacentGrids;
-    }
-    
-    checkAdjacentCardsPosition(adjacentGrids) {
-        const adjacentCardsPosition = [];
-        adjacentGrids.forEach((elem) => {
-            if (typeof this.board[elem[0]][elem[1]] !== "number") {
-                adjacentCardsPosition.push([elem[0], elem[1]])
-            }
-        })
-        return adjacentCardsPosition;
-    }
-        
-
-    checkOppositeColors(adjacentCardsPosition) {
-        // Check the colors of the cards
-        const oppositeColorCardsPosition = [];
-        adjacentCardsPosition.forEach((position) => {
-            if(this.currentCard.color !== this.board[position[0]][position[1]].color) {
-                oppositeColorCardsPosition.push([position[0], position[1]]);
-            } 
-        })
-        return oppositeColorCardsPosition;
-    }
-
-    checkIfCurrentCardWins(currentCardPosition, placedCardPosition) {
-        const placedCardRow = placedCardPosition[0];
-        const placedCardColumn = placedCardPosition[1];
-        
-        const currentCardRow = currentCardPosition[0];
-        const currentCardColumn = currentCardPosition[1];
-
-        const placedCard = this.board[placedCardRow][placedCardColumn];
-        const currentCard = this.board[currentCardRow][currentCardColumn];
-        
-        let points = null;
-        let condition = null;
-
-        if (currentCardRow > placedCardRow) {
-            points = currentCard.top - placedCard;
-        } else if (currentCardRow < placedCardRow) {
-            points = currentCard.bottom - placedCard.top;
-        } else if (currentCardColumn > placedCardColumn) {
-            points = currentCard.left - placedCard.right;
-        } else if (currentCardColumn < placedCardColumn) {
-            points = currentCard.right - placedCard.left;
-        }
-
-        if (points > 0) {
-            condition = true;
-        } else {
-            condition = false;
-        }
-
-        return condition;
-
-    }
-    
-    changeColors(position) {
-        //Change colors if the current cards rank is greater than the placed card
-        if (this.currentCard.color === "blue") {
-            this.board[position[0]][position[1]].color = "blue";
-        } else {
-            this.board[position[0]][position[1]].color = "red";
-        }
-    }
-    
-    compareMultipleCards() {
-        //Check the matching sides ranks of the opposite side cards.
-        const row = this.currentPosition[0];
-        const column = this.currentPosition[1];
-
-        const adjacentGrids = this.checkAdjacentGrids(row, column);
-        const adjacentCardsPosition = this.checkAdjacentCardsPosition(adjacentGrids);
-        const oppositeColorCardsPosition = this.checkOppositeColors(adjacentCardsPosition);
-
-        
-        oppositeColorCardsPosition.forEach((position) => {
-            if (this.checkIfCurrentCardWins(this.currentPosition, position)) {
-                this.changeColors(position);
-                if (this.currentlyPlaying === "player 1") {
-                    this.player1Points++;
-                    this.player2Points--;
-                } else {
-                    this.player2Points++;
-                    this.player1Points--;
-                }
-                console.log(position);
-            }
-        })
-        
-        
-    }
-    
-    endMessage() {
-        if (this.player1Points > this.player2Points) {
-            alert("Player 1 Won");
-        } else if (this.player1Points < this.player2Points) {
-            alert("Player 2 Won");
-        } else {
-            alert("Draw");
-        }
-    }
-    
-    checkIfAllGridsTaken() {
-        // Check if all grids are taken
-        let counter = 0;
-        this.board.forEach((row) => {
-            row.forEach((elem) => {
-                if (typeof elem === "number") {
-                    counter++;
-                }
-            })
-        })
-        if (counter === 0) {
-            alert("End of the Game. Thanks for playing");
-            alert(`Player One (Blue) has ${game.player1Points} points and Player Two (Red) has ${game.player2Points} points`);
-            this.endMessage();
-            return true;
-        } else {
-            return false;
-        }
-    }
-    
-    
-    flowOfTheGame() {
-        // A for loop or do while loop until a condition is met: All nine grids taken
-        const numberOfTurns = 9;
-        for (let i = 0; i < numberOfTurns; i++) {
-            if (i % 2 === 0) {
-                console.log("Player 1 turn")
-                this.player1Turn();
-            } else {
-                console.log("Player 2 turn")
-                this.player2Turn();
-            }
-        }
-    }
-    
-    startGame() {
-        this.createDeck();
-        this.shuffleCards();
-        this.distributeCards();
-        //this.flowOfTheGame();
-    }
-
 }
-
-//
-
-
-
