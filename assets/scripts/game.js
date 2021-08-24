@@ -25,16 +25,16 @@ class Card {
     constructor(card) {
         this.id = card.id;
         this.top = card.rank[0];
-        this.rigth = card.rank[1];
+        this.right = card.rank[1];
         this.bottom = card.rank[2];
         this.left = card.rank[3];
         this.color = card.color;
         this.name = card.name;
-        this.strength = this.top + this.rigth + this.bottom + this.left;
+        this.strength = this.top + this.right + this.bottom + this.left;
     }
 
     copyCard() {
-        const deconstructedCard = {id: this.id, rank: [this.top, this.rigth, this.bottom, this.left], color: this.color, name: this.name};
+        const deconstructedCard = {id: this.id, rank: [this.top, this.right, this.bottom, this.left], color: this.color, name: this.name};
         return new Card(deconstructedCard);
     }
 }
@@ -208,9 +208,9 @@ class Game {
         } else if (currentCardRow < placedCardRow) {
             points = currentCard.bottom - placedCard.top;
         } else if (currentCardColumn > placedCardColumn) {
-            points = currentCard.left - placedCard.rigth;
+            points = currentCard.left - placedCard.right;
         } else if (currentCardColumn < placedCardColumn) {
-            points = currentCard.rigth - placedCard.left;
+            points = currentCard.right - placedCard.left;
         }
 
         if (points > 0) {
