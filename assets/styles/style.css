@@ -1,22 +1,28 @@
+
+body {
+    margin: 100px 20px;
+}
+
 .tile {
     height: 192px;
     font-size: 16px;
     font-weight: bold;
   }
-  
+
 .tile-row {
     width: calc(160px * 3);
+    height: calc(192px * 3);
 }
 
-.player-hands {
+.player1-hands-cards,
+.player2-hands-cards {
     height: calc(112px * 5);
     width: 162px;
 }
 
-#player2-hands {
-    width: 300px;
-}
 
-#player1-hands {
+
+.player-hands {
     width: 300px;
+    height: calc(192px * 5);
 }
