@@ -1,11 +1,17 @@
 
 body {
     margin: 100px 20px;
+    background-color: #F6E9CF;
+}
+
+.game-title h1 {
+    font-size: 80px;
+    margin-bottom: 50px;
 }
 
 .tile {
     height: 192px;
-    font-size: 16px;
+    font-size: 24px;
     font-weight: bold;
   }
 
@@ -16,13 +22,35 @@ body {
 
 .player1-hands-cards,
 .player2-hands-cards {
-    height: calc(112px * 5);
+    /* height: calc(112px * 5); */
     width: 162px;
+    margin: 3px 0;
+    font-size: 24px;
 }
 
+.player1-hands-cards {
+    background-color: blue;
+    color: white;
+}
+
+
+.player2-hands-cards {
+    background-color: red;
+    color: white;
+}
 
 
 .player-hands {
     width: 300px;
-    height: calc(192px * 5);
+    margin: 0 50px;
+}
+
+.color-red {
+    background-color: red;
+    color: white;
+}
+
+.color-blue {
+    background-color: blue;
+    color: white;
 }
