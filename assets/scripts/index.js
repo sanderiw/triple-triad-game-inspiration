@@ -10,12 +10,22 @@ game.startGame();
 // game.play(0, 0, 1); //red card 8
 // game.play(0, 1, 1); //blue card 9
 
-let audioObj = new Audio('../audio/game_song.mp3');
-audioObj.play();
+const audio = new Audio("./assets/audio/game_audio.mp3");
+const audio_victory = new Audio("./assets/audio/victory_audio.mp3");
+
 let currentElement = null;
 const player1Hands = document.getElementById("player1-hands").children;
 const player2Hands = document.getElementById("player2-hands").children;
 const mainBoard = document.getElementById("main-board");
+
+const player1PointsElement = document.getElementById("score1");
+const player2PointsElement = document.getElementById("score2");
+const currentTurnElement = document.getElementById("turn")
+
+
+window.addEventListener("click", () => {
+    audio.play();
+})
 
 
 for (let i = 0; i < player1Hands.length; i++) {
@@ -127,7 +137,40 @@ boardTiles.forEach((tile, index) => {
                         }
                     })
                 })
-                setTimeout(() => game.checkIfAllGridsTaken(), 200);
+
+                //Update info bar
+                player1PointsElement.innerText = game.player1Points;
+                player2PointsElement.innerText = game.player2Points;
+                
+
+                let turnText = "";
+                if (game.currentlyPlaying === "player 2") {
+                    turnText = "P2 Turn"
+                    currentTurnElement.parentElement.classList.toggle("color-red");
+                    currentTurnElement.parentElement.classList.toggle("color-blue");
+                } else if (game.currentlyPlaying === "player 1") {
+                    turnText = "P1 Turn"
+                    currentTurnElement.parentElement.classList.toggle("color-blue");
+                    currentTurnElement.parentElement.classList.toggle("color-red");
+                }
+                
+                currentTurnElement.innerText = turnText;
+
+
+                game.checkIfAllGridsTaken();
+                if (game.endOfGame) {
+                    audio_victory.play();
+                    
+                    //audio.currentTime = 0;
+                    //audio_victory.play();
+                    
+                }
+                setTimeout(() => {
+                    if (game.endOfGame) {
+                        audio.pause();
+                        game.endMessage();  
+                    }
+                }, 200);
                  
             } else {
                 alert("Place the card on a empty grid")
@@ -138,57 +181,3 @@ boardTiles.forEach((tile, index) => {
         }        
     })
 })
-
-
-
-/*
-mainBoard.addEventListener("click", (elem) => {
-    if (game.currentCard) {
-        const html = 
-        `<p id="top" class="text-end me-2 my-0">${game.currentCard.top}</p>
-         <p class="text-end my-0"><span id="left" class="me-1">${game.currentCard.left}</span> <span id="right">${game.currentCard.right}</span></p>
-         <p id="bottom" class="text-end me-2 my-0">${game.currentCard.bottom}</p>
-         <p id="card-name" class="card-name mt-3">${game.currentCard.name}</p>`       
-    
-        let id = parseInt(elem.target.getAttribute("id"));
-        //console.log(id);
-        //console.log(elem.target);
-        game.board.forEach((arr, index) => {
-            if (arr.indexOf(id) !== -1) {
-                const row = index;
-                const column = arr.indexOf(id);
-                game.currentPosition = [row, column]
-            } else {
-                
-            }
-        })
-        
-        if (game.currentCard.color === "blue") {
-            elem.target.classList.add("color-blue");
-            elem.target.classList.remove("color-red");
-        } else if (game.currentCard.color === "red") {
-            elem.target.classList.add("color-red");
-            elem.target.classList.remove("color-blue");
-        }
-        if (typeof game.board[game.currentPosition[0]][game.currentPosition[1]] === "number") {
-            elem.target.innerHTML = html;
-            game.play();
-        } else {
-            alert("Place the card on a empty grid")
-        }
-
-        game.board.forEach((row, index) => {
-            row.forEach(tile => {
-                if (typeof tile !== "number") {
-                    //console.log(tile);
-                }
-                
-            })
-        })
-        
-
-    } else {
-        alert("Please select a card");
-    }
-})
-*/
