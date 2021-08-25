@@ -1,24 +1,24 @@
 const cardsDatabase = [
-    {id: 0, rank: [9, 6, 5, 1], color: 'neutral', name: 'squall'},
-    {id: 1, rank: [1, 5, 1, 5], color: 'neutral', name: 'ifrit'},
-    {id: 2, rank: [2, 4, 5, 10], color: 'neutral', name: 'shiva'},
-    {id: 3, rank: [2, 4, 8, 9], color: 'neutral', name: 'rinoa'},
-    {id: 4, rank: [1, 3, 6, 7], color: 'neutral', name: 'ultimecia'},
-    {id: 5, rank: [8, 2, 3, 8], color: 'neutral', name: 'zell'},
-    {id: 6, rank: [10, 7, 6, 9], color: 'neutral', name: 'quezacoatl'},
-    {id: 7, rank: [9, 3, 4, 6], color: 'neutral', name: 'diablo'},
-    {id: 8, rank: [9, 3, 4, 6], color: 'neutral', name: 'selphie'},
-    {id: 9, rank: [9, 3, 4, 6], color: 'neutral', name: 'fujin'},
-    {id: 10, rank: [8, 7, 6, 2], color: 'neutral', name: 'seifer'},
-    {id: 11, rank: [9, 6, 5, 1], color: 'neutral', name: 'quistis'},
-    {id: 12, rank: [1, 5, 1, 5], color: 'neutral', name: 'irvine'},
-    {id: 13, rank: [2, 4, 5, 10], color: 'neutral', name: 'siren'},
-    {id: 14, rank: [2, 4, 8, 9], color: 'neutral', name: 'bomb'},
-    {id: 15, rank: [1, 3, 6, 7], color: 'neutral', name: 'raijin'},
-    {id: 16, rank: [8, 2, 3, 8], color: 'neutral', name: 'cartenpilar'},
-    {id: 17, rank: [10, 7, 6, 9], color: 'neutral', name: 'laguna'},
-    {id: 18, rank: [9, 1, 2, 6], color: 'neutral', name: 'cid'},
-    {id: 19, rank: [9, 3, 4, 6], color: 'neutral', name: 'kiros'}
+    {id: 0, rank: [9, 6, 7, 3], color: 'neutral', name: 'angelo'},
+    {id: 1, rank: [10, 8, 2, 6], color: 'neutral', name: 'bahamut'},
+    {id: 2, rank: [3, 6, 5, 7], color: 'neutral', name: 'behemoth'},
+    {id: 3, rank: [1, 3, 3, 5], color: 'neutral', name: 'bitebug'},
+    {id: 4, rank: [2, 3, 1, 5], color: 'neutral', name: 'blobra'},
+    {id: 5, rank: [8, 4, 10, 4], color: 'neutral', name: 'carbuncle'},
+    {id: 6, rank: [9, 4, 8, 4], color: 'neutral', name: 'chocobo'},
+    {id: 7, rank: [4, 4, 8, 9], color: 'neutral', name: 'chubbychocobo'},
+    {id: 8, rank: [5, 10, 8, 3], color: 'neutral', name: 'diablos'},
+    {id: 9, rank: [10, 10, 3, 3], color: 'neutral', name: 'ultimecia'},
+    {id: 10, rank: [5, 1, 1, 3], color: 'neutral', name: 'funguar'},
+    {id: 11, rank: [2, 1, 4, 4], color: 'neutral', name: 'gayla'},
+    {id: 12, rank: [1, 4, 1, 5], color: 'neutral', name: 'geezard'},
+    {id: 13, rank: [3, 7, 9, 6], color: 'neutral', name: 'gilgamesh'},
+    {id: 14, rank: [9, 6, 2, 8], color: 'neutral', name: 'ifrit'},
+    {id: 15, rank: [6, 5, 6, 5], color: 'neutral', name: 'irongiant'},
+    {id: 16, rank: [2, 6, 9, 10], color: 'neutral', name: 'irvine'},
+    {id: 17, rank: [8, 8, 4, 4], color: 'neutral', name: 'jumbocactuar'},
+    {id: 18, rank: [6, 7, 6, 10], color: 'neutral', name: 'kiros'},
+    {id: 19, rank: [5, 10, 3, 9], color: 'neutral', name: 'laguna'}
 ];
 
 class Card {
@@ -32,11 +32,20 @@ class Card {
         this.color = card.color;
         this.name = card.name;
         this.strength = this.top + this.right + this.bottom + this.left;
+        this.blueCardImg = new Image();
+        this.redCardImg = new Image();
     }
 
     copyCard() {
         const deconstructedCard = {id: this.id, rank: [this.top, this.right, this.bottom, this.left], color: this.color, name: this.name};
         return new Card(deconstructedCard);
+    }
+
+    generateImg() {
+        const blueFileName = this.name + ".jpg"
+        const redFileName = this.name + "-r.jpg"
+        this.blueCardImg.src = "./assets/cards/" + blueFileName; 
+        this.redCardImg.src = "./assets/cards/" + redFileName; 
     }
 
 }
@@ -59,10 +68,15 @@ class Game {
         this.currentCard = null;
         this.currentlyPlaying = "player 1";
         this.currentPosition = null;
+        this.endOfGame = false;
     }
 
     createDeck() {
-        this.deck = this.cardsDatabase.map(elem => new Card(elem));
+        this.deck = this.cardsDatabase.map((elem) => {
+            const card = new Card(elem);
+            card.generateImg();
+            return card;
+        })
     }
     
     shuffleCards() {
@@ -204,21 +218,6 @@ class Game {
         })
     }
     
-    /*
-    flowOfTheGame() {
-        // A for loop or do while loop until a condition is met: All nine grids taken
-        const numberOfTurns = 9;
-        for (let i = 0; i < numberOfTurns; i++) {
-            if (i % 2 === 0) {
-                console.log("Player 1 turn")
-                this.player1Turn();
-            } else {
-                console.log("Player 2 turn")
-                this.player2Turn();
-            }
-        }
-    }
-    */
     
     startGame() {
         this.createDeck();
@@ -234,6 +233,8 @@ class Game {
         } else {
             alert("Draw");
         }
+        alert(`Player One (Blue) has ${game.player1Points} points and Player Two (Red) has ${game.player2Points} points`);
+        alert("End of the Game. Thanks for playing");
     }
 
     checkIfAllGridsTaken() {
@@ -246,63 +247,11 @@ class Game {
                 }
             })
         })
-        if (counter === 0) {
-            this.endMessage();
-            alert("End of the Game. Thanks for playing");
-            alert(`Player One (Blue) has ${game.player1Points} points and Player Two (Red) has ${game.player2Points} points`);
-            return true;
-        } else {
-            return false;
+        if (counter === 0) {    
+            this.endOfGame = true;
+        
         }
     }
-
-    /*
-    player1Turn(cardPosition, row, column) {
-        let rowAndColumnIndex = [0, 1, 2];
-        if (rowAndColumnIndex.includes(row) && rowAndColumnIndex.includes(column)) {
-          if (typeof this.board[row][column] === "number") {
-            if (this.player1Hands.includes(this.player1Hands[cardPosition])) {
-                this.currentCard = this.player1Hands[cardPosition];
-                this.currentPosition = [row, column];
-                this.board[row][column] = this.currentCard;
-                this.player1Hands.splice(this.player1Hands.indexOf(this.currentCard), 1);
-                this.compareMultipleCards();
-                this.checkIfAllGridsTaken();
-                this.currentlyPlaying = "player 2";
-            } else {
-                alert("You don't have this card on your deck");
-            }
-        } else {
-            alert("This grid is not empty");
-        }  
-        } else {
-            alert("You must input a valid index");
-        }
-    }
-    
-    player2Turn(cardPosition, row, column) { 
-        let rowAndColumnIndex = [0, 1, 2];
-        if (rowAndColumnIndex.includes(row) && rowAndColumnIndex.includes(column)) {
-            if (typeof this.board[row][column] === "number") {
-                if (this.player2Hands.includes(this.player2Hands[cardPosition])) {
-                    this.currentCard = this.player2Hands[cardPosition];
-                    this.currentPosition = [row, column];
-                    this.board[row][column] = this.currentCard;
-                    this.player2Hands.splice(this.player2Hands.indexOf(this.currentCard), 1);
-                    this.compareMultipleCards();
-                    this.checkIfAllGridsTaken();
-                    this.currentlyPlaying = "player 1";
-                } else {
-                    alert("You don't have this card on your deck");
-                }
-            } else {
-                alert("This grid is not empty");
-            }  
-        } else {
-            alert("You must input a valid index");
-        }
-    }
-    */
 
     player1Turn() {
         const row = this.currentPosition[0];
