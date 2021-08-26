@@ -69,9 +69,12 @@ player1Cards.forEach((card) => {
             
             const fileName = name.slice(indexOfFirstLetter, indexOfLastLetter);
             game.currentCard = game.player1Hands.find((elem) => elem.name === fileName);
+            player1Cards.forEach(elem => elem.classList.remove('big'));
+            currentElement.classList.add("big");
+            
             
         } else {
-            alert("Player 2 turn - You cannot select Player 1 cards")
+            alert("Player 1 turn - You cannot select Player 2 cards")
         }
     })
 })
@@ -97,6 +100,8 @@ player2Cards.forEach((card) => {
             
             const fileName = name.slice(indexOfFirstLetter, indexOfLastLetter);
             game.currentCard = game.player2Hands.find((elem) => elem.name === fileName);
+            player2Cards.forEach(elem => elem.classList.remove('big'));
+            currentElement.classList.add("big");
             
         } else {
             alert("Player 2 turn - You cannot select Player 1 cards")

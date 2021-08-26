@@ -50,11 +50,13 @@ body {
 }
 
 .turn.player1 {
-    margin-left: 300px;
+    margin-left: 400px;
+    transition: margin-left 1.5s;
 }
 
 .turn.player2 {
-    margin-right: 300px;
+    margin-right: 400px;
+    transition: margin-right 1.5s;
 }
 
 .score h2 {

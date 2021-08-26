@@ -8,7 +8,6 @@ const cardsDatabase = [
     {id: 6, rank: [9, 4, 8, 4], color: 'neutral', name: 'chocobo'},
     {id: 7, rank: [4, 4, 8, 9], color: 'neutral', name: 'chubbychocobo'},
     {id: 8, rank: [5, 10, 8, 3], color: 'neutral', name: 'diablos'},
-    {id: 9, rank: [10, 10, 3, 3], color: 'neutral', name: 'ultimecia'},
     {id: 10, rank: [5, 1, 1, 3], color: 'neutral', name: 'funguar'},
     {id: 11, rank: [2, 1, 4, 4], color: 'neutral', name: 'gayla'},
     {id: 12, rank: [1, 4, 1, 5], color: 'neutral', name: 'geezard'},
@@ -18,7 +17,26 @@ const cardsDatabase = [
     {id: 16, rank: [2, 6, 9, 10], color: 'neutral', name: 'irvine'},
     {id: 17, rank: [8, 8, 4, 4], color: 'neutral', name: 'jumbocactuar'},
     {id: 18, rank: [6, 7, 6, 10], color: 'neutral', name: 'kiros'},
-    {id: 19, rank: [5, 10, 3, 9], color: 'neutral', name: 'laguna'}
+    {id: 19, rank: [5, 10, 3, 9], color: 'neutral', name: 'laguna'},
+    {id: 19, rank: [7, 10, 1, 7], color: 'neutral', name: 'leviathan'},
+    {id: 19, rank: [9, 3, 9, 2], color: 'neutral', name: 'minimog'},
+    {id: 19, rank: [9, 5, 2, 9], color: 'neutral', name: 'minotaur'},
+    {id: 19, rank: [8, 10, 3, 5], color: 'neutral', name: 'odin'},
+    {id: 19, rank: [10, 1, 7, 7], color: 'neutral', name: 'pandemona'},
+    {id: 19, rank: [2, 9, 9, 4], color: 'neutral', name: 'quezacoatl'},
+    {id: 19, rank: [9, 6, 10, 2], color: 'neutral', name: 'quistis'},
+    {id: 19, rank: [6, 1, 1, 2], color: 'neutral', name: 'redbat'},
+    {id: 19, rank: [4, 10, 2, 10], color: 'neutral', name: 'rinoa'},
+    {id: 19, rank: [5, 1, 9, 9], color: 'neutral', name: 'sacred'},
+    {id: 19, rank: [6, 9, 10, 4], color: 'neutral', name: 'seifer'},
+    {id: 19, rank: [10, 8, 6, 4], color: 'neutral', name: 'selphie'},
+    {id: 19, rank: [6, 7, 4, 9], color: 'neutral', name: 'shiva'},
+    {id: 19, rank: [8, 9, 6, 2], color: 'neutral', name: 'siren'},
+    {id: 19, rank: [10, 4, 6, 9], color: 'neutral', name: 'squall'},
+    {id: 19, rank: [4, 6, 2, 7], color: 'neutral', name: 'trexaur'},
+    {id: 9, rank: [10, 10, 3, 3], color: 'neutral', name: 'ultimecia'},
+    {id: 19, rank: [10, 7, 2, 8], color: 'neutral', name: 'ward'},
+    {id: 19, rank: [8, 5, 10, 6], color: 'neutral', name: 'zell'}
 ];
 
 class Card {
