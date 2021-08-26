@@ -4,6 +4,9 @@ body {
     background-color: #F6E9CF;
     height: 100%;
     background-image: url("../img/background-total.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 /* .board-area {
@@ -13,13 +16,14 @@ body {
     background-position: center;
 } */
 
+
 #main-board {
     background-image: url(../img/background_HD.png);
     background-repeat: no-repeat;
     background-size:cover;
-    background-position: center;
+    background-position:10px;
     height: 600px;
-    width: 500px;
+    width: 530px;
     margin-bottom: 150px;
 }
 
@@ -32,7 +36,9 @@ body {
 .game-info {
     width: 1000px;
     text-align: center;
-    margin-left: 10px;
+    margin-left: 25px;
+    /* margin-right: 135px; */
+    margin-bottom: 0px;
 }
 
 .turn {
@@ -46,11 +52,13 @@ body {
 
 .score h2 {
     font-size: 40px;
+    margin: 0;
 }
 
 .score p, 
 .score span {
-    font-size: 32px;
+    font-size: 144px;
+    margin: 0;
 }
 
 

@@ -20,28 +20,32 @@
     <!-- Linking the styles -->
     <link rel="stylesheet" href="./assets/styles/style.css">
 </head>
+
 <body 
+    id="game-content"
     class="
         container
         d-flex
         flex-column
         justify-content-center
-        align-items-center">
+        align-items-center
+        game-content">
 
-    <div class="game-title">
+
+    <div class="game-title d-flex justify-content-center">
         <h1>Triple Triad</h1> 
     </div>
     <div class="game-info d-flex justify-content-between align-items-center mb-3">
         <div class="score">
             <h2>Player 2</h2>
-            <p>Score: <span id="score2">5</span></p>
+            <p><span id="score2">5</span></p>
         </div>
         <div class="turn color-blue">
             <p id="turn">P1 Turn</p>
         </div>
         <div class="score">
             <h2>Player 1</h2>
-            <p>Score: <span id="score1">5</span></p>
+            <p><span id="score1">5</span></p>
         </div>
     </div>
     
@@ -75,6 +79,8 @@
             <div card="4" class="col text-center player1-hands-cards"></div>
         </div>
     </div>  
+
+    
     
     
     <!-- Linking JS -->
