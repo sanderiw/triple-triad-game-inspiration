@@ -1,13 +1,32 @@
-
 body {
+    font-family: 'VT323', monospace;
     margin: 100px 20px;
     background-color: #F6E9CF;
+    height: 100%;
+    background-image: url("../img/background-total.jpg");
+}
+
+/* .board-area {
+    background-image: url(../img/background.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+} */
+
+#main-board {
+    background-image: url(../img/background_HD.png);
+    background-repeat: no-repeat;
+    background-size:cover;
+    background-position: center;
+    height: 600px;
+    width: 500px;
+    margin-bottom: 150px;
 }
 
 .game-title h1 {
-    font-size: 80px;
-    margin-bottom: 50px;
-    margin-top: 100px;
+    font-size: 112px;
+    margin-bottom: 30px;
+    margin-top: 10px;
 }
 
 .game-info {
@@ -19,6 +38,10 @@ body {
 .turn {
     font-size: 32px;
     font-weight: bolder;
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 8px 22px 0 22px;
+    
 }
 
 .score h2 {
@@ -52,20 +75,27 @@ body {
 }
 
 .player1-hands-cards {
-    background-color: blue;
+    /* background-color: blue; */
     color: white;
+}
+
+.player1-hands-cards:hover,
+.player2-hands-cards:hover {
+    width: 10000px;
+    height: 10000px;
 }
 
 
 .player2-hands-cards {
-    background-color: red;
+    /* background-color: red; */
     color: white;
 }
 
 
 .player-hands {
     width: 300px;
-    margin: 0 50px;
+    margin: 0 50px 100px 50px;
+    height: 1000px;
 }
 
 .color-red {

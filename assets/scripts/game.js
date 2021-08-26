@@ -32,20 +32,27 @@ class Card {
         this.color = card.color;
         this.name = card.name;
         this.strength = this.top + this.right + this.bottom + this.left;
-        this.blueCardImg = new Image();
-        this.redCardImg = new Image();
+        this.blueCardImg = new Image(160, 192);
+        this.redCardImg = new Image(160, 192);
     }
 
     copyCard() {
-        const deconstructedCard = {id: this.id, rank: [this.top, this.right, this.bottom, this.left], color: this.color, name: this.name};
-        return new Card(deconstructedCard);
+        const deconstructedCard = {
+            id: this.id, 
+            rank: [this.top, this.right, this.bottom, this.left], 
+            color: this.color, 
+            name: this.name
+        };
+        const card = new Card(deconstructedCard);
+        card.generateImg();
+        return card;
     }
 
     generateImg() {
         const blueFileName = this.name + ".jpg"
         const redFileName = this.name + "-r.jpg"
-        this.blueCardImg.src = "./assets/cards/" + blueFileName; 
-        this.redCardImg.src = "./assets/cards/" + redFileName; 
+        this.blueCardImg.src = "./assets/img/cards/" + blueFileName; 
+        this.redCardImg.src = "./assets/img/cards/" + redFileName; 
     }
 
 }
@@ -202,6 +209,7 @@ class Game {
         const adjacentGrids = this.checkAdjacentGrids(row, column);
         const adjacentCardsPosition = this.checkAdjacentCardsPosition(adjacentGrids);
         const oppositeColorCardsPosition = this.checkOppositeColors(adjacentCardsPosition);
+        const positions = [];
         
         oppositeColorCardsPosition.forEach((position) => {
             if (this.checkIfCurrentCardWins(this.currentPosition, position)) {
@@ -213,9 +221,10 @@ class Game {
                     this.player2Points++;
                     this.player1Points--;
                 }
-                console.log(position);
+                positions.push(position);
             }
         })
+        return positions;
     }
     
     
@@ -257,12 +266,13 @@ class Game {
         const row = this.currentPosition[0];
         const column = this.currentPosition[1];
         let rowAndColumnIndex = [0, 1, 2];
+        let positions = [];
         if (rowAndColumnIndex.includes(row) && rowAndColumnIndex.includes(column)) {
           if (typeof this.board[row][column] === "number") {
             if (this.player1Hands.includes(this.currentCard)) {
                 this.board[row][column] = this.currentCard;
                 this.player1Hands.splice(this.player1Hands.indexOf(this.currentCard), 1);
-                this.compareMultipleCards();
+                positions = this.compareMultipleCards();
                 this.currentlyPlaying = "player 2";
             } else {
                 alert("You don't have this card on your deck");
@@ -275,18 +285,20 @@ class Game {
         }
         this.currentCard = null;
         this.currentPosition = null;
+        return positions;
     }
     
     player2Turn() {
         const row = this.currentPosition[0];
         const column = this.currentPosition[1];
         let rowAndColumnIndex = [0, 1, 2];
+        let positions = [];
         if (rowAndColumnIndex.includes(row) && rowAndColumnIndex.includes(column)) {
           if (typeof this.board[row][column] === "number") {
             if (this.player2Hands.includes(this.currentCard)) {
                 this.board[row][column] = this.currentCard;
                 this.player2Hands.splice(this.player2Hands.indexOf(this.currentCard), 1);
-                this.compareMultipleCards();
+                positions = this.compareMultipleCards();
                 this.currentlyPlaying = "player 1";
             } else {
                 alert("You don't have this card on your deck");
@@ -299,14 +311,17 @@ class Game {
         }
         this.currentCard = null;
         this.currentPosition = null;
+        return positions;
     }
 
-    play(cardPosition, row, column) {
+    play() {
+        let positions = [];
         if (this.currentlyPlaying === "player 1") {
-            this.player1Turn();
+            positions = this.player1Turn();
         } else {
-            this.player2Turn(cardPosition, row, column);
+            positions = this.player2Turn();
         }
-    }
-
+        return positions;
+    } 
+    
 }

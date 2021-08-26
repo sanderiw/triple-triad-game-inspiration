@@ -11,7 +11,10 @@ game.startGame();
 // game.play(0, 1, 1); //blue card 9
 
 const audio = new Audio("./assets/audio/game_audio.mp3");
-const audio_victory = new Audio("./assets/audio/victory_audio.mp3");
+const audioVictory = new Audio("./assets/audio/victory_audio.mp3");
+const audioSelect = new Audio("./assets/audio/card_picked.wav");
+const audioBoard = new Audio("./assets/audio/card_on_field.wav")
+const audioConquered = new Audio("./assets/audio/card_conquered.wav")
 
 let currentElement = null;
 const player1Hands = document.getElementById("player1-hands").children;
@@ -29,29 +32,43 @@ window.addEventListener("click", () => {
 
 
 for (let i = 0; i < player1Hands.length; i++) {
-    const html1 = 
-    `<p id="top" card-position=${i} class="text-end me-2 my-0">${game.player1Hands[i].top}</p>
-     <p class="text-end my-0"><span id="left" class="me-1">${game.player1Hands[i].left}</span> <span id="right">${game.player1Hands[i].right}</span></p>
-     <p id="bottom" class="text-end me-2 my-0">${game.player1Hands[i].bottom}</p>
-     <p id="card-name" class="card-name mt-3">${game.player1Hands[i].name}</p>`
+    // const html1 = 
+    // `<p id="top" card-position=${i} class="text-end me-2 my-0">${game.player1Hands[i].top}</p>
+    //  <p class="text-end my-0"><span id="left" class="me-1">${game.player1Hands[i].left}</span> <span id="right">${game.player1Hands[i].right}</span></p>
+    //  <p id="bottom" class="text-end me-2 my-0">${game.player1Hands[i].bottom}</p>
+    //  <p id="card-name" class="card-name mt-3">${game.player1Hands[i].name}</p>`
 
-     const html2 = 
-    `<p id="top" class="text-end me-2 my-0">${game.player2Hands[i].top}</p>
-     <p class="text-end my-0"><span id="left" class="me-1">${game.player2Hands[i].left}</span> <span id="right">${game.player2Hands[i].right}</span></p>
-     <p id="bottom" class="text-end me-2 my-0">${game.player2Hands[i].bottom}</p>
-     <p id="card-name" class="card-name mt-3">${game.player2Hands[i].name}</p>`
+    //  const html2 = 
+    // `<p id="top" class="text-end me-2 my-0">${game.player2Hands[i].top}</p>
+    //  <p class="text-end my-0"><span id="left" class="me-1">${game.player2Hands[i].left}</span> <span id="right">${game.player2Hands[i].right}</span></p>
+    //  <p id="bottom" class="text-end me-2 my-0">${game.player2Hands[i].bottom}</p>
+    //  <p id="card-name" class="card-name mt-3">${game.player2Hands[i].name}</p>`
     
-     player1Hands[i].innerHTML = html1;
-     player2Hands[i].innerHTML = html2
+     player1Hands[i].appendChild(game.player1Hands[i].blueCardImg);
+     player2Hands[i].appendChild(game.player2Hands[i].redCardImg);
 }
 
 const player1Cards = document.querySelectorAll(".player1-hands-cards")
 player1Cards.forEach((card) => {
     card.addEventListener("click", (event) => {
         if (game.currentlyPlaying === "player 1") {
+            audioSelect.play();
             currentElement = event.currentTarget;
-            const name = currentElement.lastElementChild.innerText;
-            game.currentCard = game.player1Hands.find((elem) => elem.name === name);
+            const name = currentElement.firstElementChild.getAttribute("src");
+            const indexOfFirstLetter = name.indexOf("/", 13) + 1;
+            const indexOfDash = name.indexOf("-");
+            const indexOfDot = name.indexOf(".", 1);
+            let indexOfLastLetter = null;
+            if (indexOfDash === -1) {
+                indexOfLastLetter = indexOfDot;
+            } else if (indexOfDash < indexOfDot) {
+                indexOfLastLetter = indexOfDash;
+            } else if (indexOfDash > indexOfDot) {
+                indexOfLastLetter = indexOfDot
+            }
+            
+            const fileName = name.slice(indexOfFirstLetter, indexOfLastLetter);
+            game.currentCard = game.player1Hands.find((elem) => elem.name === fileName);
             
         } else {
             alert("Player 2 turn - You cannot select Player 1 cards")
@@ -63,12 +80,26 @@ const player2Cards = document.querySelectorAll(".player2-hands-cards")
 player2Cards.forEach((card) => {
     card.addEventListener("click", (event) => {
         if (game.currentlyPlaying === "player 2") {
+            audioSelect.play();
             currentElement = event.currentTarget;
-            const name = currentElement.lastElementChild.innerText;
-            game.currentCard = game.player2Hands.find((elem) => elem.name === name);
+            const name = currentElement.firstElementChild.getAttribute("src");
+            const indexOfFirstLetter = name.indexOf("/", 13) + 1;
+            const indexOfDash = name.indexOf("-");
+            const indexOfDot = name.indexOf(".", 1);
+            let indexOfLastLetter = null;
+            if (indexOfDash === -1) {
+                indexOfLastLetter = indexOfDot;
+            } else if (indexOfDash < indexOfDot) {
+                indexOfLastLetter = indexOfDash;
+            } else if (indexOfDash > indexOfDot) {
+                indexOfLastLetter = indexOfDot
+            }
+            
+            const fileName = name.slice(indexOfFirstLetter, indexOfLastLetter);
+            game.currentCard = game.player2Hands.find((elem) => elem.name === fileName);
             
         } else {
-            alert("Player 1 turn - You cannot select Player 2 cards");
+            alert("Player 2 turn - You cannot select Player 1 cards")
         }
     })
 })
@@ -78,11 +109,11 @@ boardTiles.forEach((tile, index) => {
     tile.addEventListener('click', (elem) => {
         
         if (game.currentCard) {
-            const html = 
-            `<p id="top" class="text-end me-2 my-0">${game.currentCard.top}</p>
-             <p class="text-end my-0"><span id="left" class="me-1">${game.currentCard.left}</span> <span id="right">${game.currentCard.right}</span></p>
-             <p id="bottom" class="text-end me-2 my-0">${game.currentCard.bottom}</p>
-             <p id="card-name" class="card-name mt-3">${game.currentCard.name}</p>`       
+            // const html = 
+            // `<p id="top" class="text-end me-2 my-0">${game.currentCard.top}</p>
+            //  <p class="text-end my-0"><span id="left" class="me-1">${game.currentCard.left}</span> <span id="right">${game.currentCard.right}</span></p>
+            //  <p id="bottom" class="text-end me-2 my-0">${game.currentCard.bottom}</p>
+            //  <p id="card-name" class="card-name mt-3">${game.currentCard.name}</p>`
         
             let id = parseInt(elem.currentTarget.getAttribute("id"));
            
@@ -96,19 +127,36 @@ boardTiles.forEach((tile, index) => {
             
             if (game.currentPosition) {
                 if (game.currentCard.color === "blue") {
-                    elem.currentTarget.classList.add("color-blue");
-                    elem.currentTarget.classList.remove("color-red");
+                    //elem.currentTarget.classList.add("color-blue");
+                    //elem.currentTarget.classList.remove("color-red");
+                    elem.currentTarget.appendChild(game.currentCard.blueCardImg);
+                    audioBoard.play();
                 } else if (game.currentCard.color === "red") {
-                    elem.currentTarget.classList.add("color-red");
-                    elem.currentTarget.classList.remove("color-blue");
+                    //elem.currentTarget.classList.add("color-red");
+                    //elem.currentTarget.classList.remove("color-blue");
+                    elem.currentTarget.appendChild(game.currentCard.redCardImg);
+                    audioBoard.play();
                 }
                 
                 currentElement.parentNode.removeChild(currentElement);
-                elem.currentTarget.innerHTML = html;
+                
+                
+                
 
                 currentElement = null;
                 
-                game.play();
+                const changedPositions = game.play();
+                
+                if (changedPositions) {
+                    changedPositions.forEach(position => {
+                        audioConquered.play();
+                        let id2 = 3 * position[0] + position[1];
+                        document.getElementById(id2).classList.toggle("big");
+
+                        
+                    })
+                }
+                
 
                 game.board.forEach((arr, row) => {
                     arr.forEach((card, column) => {
@@ -119,9 +167,12 @@ boardTiles.forEach((tile, index) => {
                                 //elem.currentTarget.classList.add("color-blue");
                                 //console.log(card.color)
                                 let id2 = 3 * row + column;
-                                document.getElementById(id2).classList.add("color-blue");
-                                document.getElementById(id2).classList.remove("color-red");
-
+                                //document.getElementById(id2).classList.add("color-blue");
+                                //document.getElementById(id2).classList.remove("color-red");
+                                document.getElementById(id2).removeChild(document.getElementById(id2).firstElementChild);
+                                document.getElementById(id2).appendChild(game.board[row][column].blueCardImg);
+                                //elem.currentTarget.appendChild(game.currentCard.blueCardImg);
+                                
 
                             } else if (card.color === "red") {
                                 //elem.currentTarget.classList.remove("color-blue");
@@ -129,8 +180,11 @@ boardTiles.forEach((tile, index) => {
                                 //console.log(card.color)
                                 //console.log(row*3 + column);
                                 let id2 = 3 * row + column;
-                                document.getElementById(id2).classList.add("color-red");
-                                document.getElementById(id2).classList.remove("color-blue");
+                                //document.getElementById(id2).classList.add("color-red");
+                                //document.getElementById(id2).classList.remove("color-blue");
+                                document.getElementById(id2).removeChild(document.getElementById(id2).firstElementChild);
+                                document.getElementById(id2).appendChild(game.board[row][column].redCardImg);
+                                //document.getElementById(id2).appendChild(game.currentCard.redCardImg);
 
 
                             }
@@ -159,10 +213,7 @@ boardTiles.forEach((tile, index) => {
 
                 game.checkIfAllGridsTaken();
                 if (game.endOfGame) {
-                    audio_victory.play();
-                    
-                    //audio.currentTime = 0;
-                    //audio_victory.play();
+                    audioVictory.play();
                     
                 }
                 setTimeout(() => {
