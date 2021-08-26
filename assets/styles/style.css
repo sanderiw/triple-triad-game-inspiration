@@ -34,10 +34,9 @@ body {
 }
 
 .game-info {
-    width: 1000px;
+    width: 1030px;
     text-align: center;
-    margin-left: 25px;
-    /* margin-right: 135px; */
+    margin-left: 15px;
     margin-bottom: 0px;
 }
 
@@ -50,6 +49,14 @@ body {
     
 }
 
+.turn.player1 {
+    margin-left: 300px;
+}
+
+.turn.player2 {
+    margin-right: 300px;
+}
+
 .score h2 {
     font-size: 40px;
     margin: 0;
@@ -59,6 +66,8 @@ body {
 .score span {
     font-size: 144px;
     margin: 0;
+    height: 160px;
+    line-height: 160px;
 }
 
 
@@ -80,6 +89,7 @@ body {
     width: 162px;
     margin: 3px 0;
     font-size: 24px;
+    transform: scale(1);
 }
 
 .player1-hands-cards {
@@ -87,10 +97,10 @@ body {
     color: white;
 }
 
-.player1-hands-cards:hover,
-.player2-hands-cards:hover {
-    width: 10000px;
-    height: 10000px;
+.player1-hands-cards.playing:hover,
+.player2-hands-cards.playing:hover {
+   transform: scale(1.3);
+    
 }
 
 
@@ -114,4 +124,8 @@ body {
 .color-blue {
     background-color: blue;
     color: white;
+}
+
+.big {
+    transform: scale(1.3);
 }

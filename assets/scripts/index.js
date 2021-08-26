@@ -148,10 +148,17 @@ boardTiles.forEach((tile, index) => {
                 const changedPositions = game.play();
                 
                 if (changedPositions) {
-                    changedPositions.forEach(position => {
-                        audioConquered.play();
+                    changedPositions.forEach((position, index) => {
                         let id2 = 3 * position[0] + position[1];
-                        document.getElementById(id2).classList.toggle("big");
+                        setTimeout(() => {
+                            document.getElementById(id2).classList.toggle("big");
+                            audioConquered.play();
+                        }, 150 * (index + 1));
+                        
+                        setTimeout(() => {
+                            document.getElementById(id2).classList.toggle("big");
+                            audioConquered.play();
+                        }, 300 * (index + 1));
 
                         
                     })
@@ -196,16 +203,38 @@ boardTiles.forEach((tile, index) => {
                 player1PointsElement.innerText = game.player1Points;
                 player2PointsElement.innerText = game.player2Points;
                 
+                const player1HandsElement = document.querySelectorAll(".player1-hands-cards");
+                const player2HandsElement = document.querySelectorAll(".player2-hands-cards");
+                console.log(player2HandsElement);
+                console.log(player1HandsElement);
+
 
                 let turnText = "";
                 if (game.currentlyPlaying === "player 2") {
                     turnText = "P2 Turn"
+                    currentTurnElement.parentElement.classList.toggle("player2");
+                    currentTurnElement.parentElement.classList.toggle("player1");
                     currentTurnElement.parentElement.classList.toggle("color-red");
                     currentTurnElement.parentElement.classList.toggle("color-blue");
+                    for (let i = 0; i < player2HandsElement.length; i++) {
+                        player2HandsElement[i].classList.add("playing");
+                        if (player1HandsElement[i]) {
+                            player1HandsElement[i].classList.remove("playing");
+                        }
+                        
+                    }
                 } else if (game.currentlyPlaying === "player 1") {
                     turnText = "P1 Turn"
+                    currentTurnElement.parentElement.classList.toggle("player1");
+                    currentTurnElement.parentElement.classList.toggle("player2");
                     currentTurnElement.parentElement.classList.toggle("color-blue");
                     currentTurnElement.parentElement.classList.toggle("color-red");
+                    for (let i = 0; i < player1HandsElement.length; i++) {
+                        player1HandsElement[i].classList.add("playing");
+                        if (player2HandsElement[i]) {
+                            player2HandsElement[i].classList.remove("playing");
+                        }
+                    }
                 }
                 
                 currentTurnElement.innerText = turnText;
