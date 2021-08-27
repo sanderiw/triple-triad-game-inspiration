@@ -2,7 +2,7 @@
 
 ## Description
 
-A game inspired by the Triple Triad game from Final Fantasy VIII.
+A game inspired by the original Triple Triad minigame from Final Fantasy VIII.
 
 ## Technologies used
 
@@ -10,8 +10,8 @@ A game inspired by the Triple Triad game from Final Fantasy VIII.
 - CSS
 - Pure Java Script
 
-## License
-Triple triad and Final Fantasy VIII are Squaresoft Japan trademarks and I do not own any right to this game or brand. This project is only a tribute to the game
+## Play it :)
+https://sanderiw.github.io/triple-triad-game-inspiration/
 
 ## Rules, Logic and Pseudo Code
 
@@ -68,4 +68,6 @@ Player two always end up with one card on hand, since the board have 9 grids.
     - An Alert shows the victory of Player Two
     - An option to restart the game is shown
 
+## License
+Triple triad and Final Fantasy VIII are Squaresoft Japan trademarks and I do not own any right to this game or brand. This project is only a tribute to the game
 
