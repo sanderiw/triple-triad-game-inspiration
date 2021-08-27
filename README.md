@@ -1,5 +1,7 @@
 # Triple Triad Game Inspiration
 
+![alt text](https://github.com/sanderiw/triple-triad-game-inspiration/blob/main/assets/img/finalfantasy_logo.png)
+
 ## Description
 
 A game inspired by the original Triple Triad minigame from Final Fantasy VIII.
