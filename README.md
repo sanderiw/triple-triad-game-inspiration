@@ -15,6 +15,10 @@ A game inspired by the original Triple Triad minigame from Final Fantasy VIII.
 ## Play it :)
 https://sanderiw.github.io/triple-triad-game-inspiration/
 
+
+## Presentation of my project
+https://docs.google.com/presentation/d/1ap4cko85awTmtNV1TmTk0JPWw8FcjOu6g35ZWm0jVCg/edit?usp=sharing
+
 ## Rules, Logic and Pseudo Code
 
 ### Understanding the game
