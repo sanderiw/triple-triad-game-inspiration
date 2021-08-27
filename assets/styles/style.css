@@ -46,7 +46,14 @@ body {
     border: 2px solid black;
     border-radius: 10px;
     padding: 8px 22px 0 22px;
+    height: 100px;
+    line-height: 35px;
     
+}
+
+.turn p {
+    margin: 0;
+    text-transform: capitalize;
 }
 
 .turn.player1 {
@@ -59,9 +66,16 @@ body {
     transition: margin-right 1.5s;
 }
 
+.turn.win {
+    background-color: purple;
+    color: white;
+}
+
 .score h2 {
     font-size: 40px;
     margin: 0;
+    border: 2px solid black;
+    padding: 5px 10px;
 }
 
 .score p, 

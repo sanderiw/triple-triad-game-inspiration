@@ -23,8 +23,8 @@ const mainBoard = document.getElementById("main-board");
 
 const player1PointsElement = document.getElementById("score1");
 const player2PointsElement = document.getElementById("score2");
-const currentTurnElement = document.getElementById("turn")
-
+const currentTurnElement = document.getElementById("turn");
+const cardSelectedElement = document.getElementById("card-selected");
 
 window.addEventListener("click", () => {
     audio.play();
@@ -71,6 +71,7 @@ player1Cards.forEach((card) => {
             game.currentCard = game.player1Hands.find((elem) => elem.name === fileName);
             player1Cards.forEach(elem => elem.classList.remove('big'));
             currentElement.classList.add("big");
+            cardSelectedElement.innerText = game.currentCard.name;
             
             
         } else {
@@ -102,6 +103,7 @@ player2Cards.forEach((card) => {
             game.currentCard = game.player2Hands.find((elem) => elem.name === fileName);
             player2Cards.forEach(elem => elem.classList.remove('big'));
             currentElement.classList.add("big");
+            cardSelectedElement.innerText = game.currentCard.name;
             
         } else {
             alert("Player 2 turn - You cannot select Player 1 cards")
@@ -241,21 +243,26 @@ boardTiles.forEach((tile, index) => {
                         }
                     }
                 }
-                
+
+                cardSelectedElement.innerText = "Select a card!";
                 currentTurnElement.innerText = turnText;
 
 
                 game.checkIfAllGridsTaken();
                 if (game.endOfGame) {
                     audioVictory.play();
-                    
+                    currentTurnElement.parentElement.classList.remove("player1");
+                    currentTurnElement.parentElement.classList.remove("player2");
+                    currentTurnElement.parentElement.classList.add("win");
+                    currentTurnElement.innerText = "Nice game"
+                    cardSelectedElement.innerText = "VAI SER DIFíCIL";   
                 }
                 setTimeout(() => {
                     if (game.endOfGame) {
                         audio.pause();
                         game.endMessage();  
                     }
-                }, 200);
+                }, 550);
                  
             } else {
                 alert("Place the card on a empty grid")
