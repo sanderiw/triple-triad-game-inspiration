@@ -75,7 +75,7 @@ player1Cards.forEach((card) => {
             
             
         } else {
-            alert("Player 1 turn - You cannot select Player 2 cards")
+            alert("Player 2 turn - You cannot select Player 1 cards")
         }
     })
 })
@@ -106,7 +106,7 @@ player2Cards.forEach((card) => {
             cardSelectedElement.innerText = game.currentCard.name;
             
         } else {
-            alert("Player 2 turn - You cannot select Player 1 cards")
+            alert("Player 1 turn - You cannot select Player 2 cards")
         }
     })
 })
