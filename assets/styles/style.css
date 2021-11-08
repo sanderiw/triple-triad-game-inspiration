@@ -146,7 +146,7 @@ body {
   transform: scale(1.3);
 }
 
-@media screen and (max-width: 640px) {
+@media screen and (max-width: 640px), screen and (max-height: 600px) {
   html {
     zoom: 0.3;
   }
@@ -162,12 +162,18 @@ body {
   }
 
   .score p,
-  .score span,
-  .score h2 {
+  .score span {
     font-size: 14px;
   }
 
+  .score h2 {
+    font-size: 18px;
+  }
+
   .game-title h1 {
-    font-size: 14px;
+    font-size: 22px;
+  }
+  .turn {
+    font-size: 16px;
   }
 }
