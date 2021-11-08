@@ -155,6 +155,7 @@ body {
     -moz-transform: scale(0.4);
     -webkit-transform: scale(0.4);
     transform: scale(0.4);
+    -webkit-text-size-adjust: auto;
   }
   body {
     background-size: 600%;
