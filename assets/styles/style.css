@@ -147,8 +147,10 @@ body {
 }
 
 @media screen and (max-width: 640px) {
-  body {
+  html {
     zoom: 0.3;
+  }
+  body {
     background-size: 600%;
   }
   #main-board {
