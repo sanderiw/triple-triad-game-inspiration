@@ -161,7 +161,13 @@ body {
     width: 560px;
   }
 
-  .game-info {
-    zoom: 0.4;
+  .score p,
+  .score span,
+  .score h2 {
+    font-size: 14px;
+  }
+
+  .game-title h1 {
+    font-size: 14px;
   }
 }
