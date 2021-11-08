@@ -163,17 +163,17 @@ body {
 
   .score p,
   .score span {
-    font-size: 14px;
+    font-size: 22px;
   }
 
   .score h2 {
-    font-size: 18px;
+    font-size: 14px;
   }
 
   .game-title h1 {
     font-size: 22px;
   }
   .turn {
-    font-size: 16px;
+    font-size: 12px;
   }
 }
