@@ -1,12 +1,13 @@
 body {
-    font-family: 'VT323', monospace;
-    margin: 100px 20px;
-    background-color: #F6E9CF;
-    height: 100%;
-    background-image: url("../img/background-total.jpg");
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
+  font-family: 'VT323', monospace;
+  margin: 20px 20px;
+  background-color: #f6e9cf;
+  height: 100vh;
+  background-image: url('../img/background-total.jpg');
+  background-position: center;
+  background-size: 300%;
+  background-repeat: no-repeat;
+  zoom: 0.5;
 }
 
 /* .board-area {
@@ -16,132 +17,140 @@ body {
     background-position: center;
 } */
 
-
 #main-board {
-    background-image: url(../img/background_HD.png);
-    background-repeat: no-repeat;
-    background-size:cover;
-    background-position:10px;
-    height: 600px;
-    width: 530px;
-    margin-bottom: 150px;
+  background-image: url(../img/background_HD.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position-x: 0px;
+  height: 710px;
+  width: 560px;
+  margin-bottom: 150px;
 }
 
 .game-title h1 {
-    font-size: 112px;
-    margin-bottom: 30px;
-    margin-top: 10px;
+  font-size: 112px;
+  margin-bottom: 30px;
+  margin-top: 10px;
+  width: 100vw;
+  text-align: center;
 }
 
 .game-info {
-    width: 1030px;
-    text-align: center;
-    margin-left: 15px;
-    margin-bottom: 0px;
+  width: 1030px;
+  text-align: center;
+  margin-left: 15px;
+  margin-bottom: 0px;
 }
 
 .turn {
-    font-size: 32px;
-    font-weight: bolder;
-    border: 2px solid black;
-    border-radius: 10px;
-    padding: 8px 22px 0 22px;
-    height: 100px;
-    line-height: 35px;
-    
+  font-size: 32px;
+  font-weight: bolder;
+  border: 2px solid black;
+  border-radius: 10px;
+  padding: 8px 22px 0 22px;
+  height: 100px;
+  line-height: 35px;
 }
 
 .turn p {
-    margin: 0;
-    text-transform: capitalize;
+  margin: 0;
+  text-transform: capitalize;
 }
 
 .turn.player1 {
-    margin-left: 400px;
-    transition: margin-left 1.5s;
+  margin-left: 400px;
+  transition: margin-left 1.5s;
 }
 
 .turn.player2 {
-    margin-right: 400px;
-    transition: margin-right 1.5s;
+  margin-right: 400px;
+  transition: margin-right 1.5s;
 }
 
 .turn.win {
-    background-color: purple;
-    color: white;
+  background-color: purple;
+  color: white;
 }
 
 .score h2 {
-    font-size: 40px;
-    margin: 0;
-    border: 2px solid black;
-    padding: 5px 10px;
+  font-size: 40px;
+  margin: 0;
+  border: 2px solid black;
+  padding: 5px 10px;
 }
 
-.score p, 
+.score p,
 .score span {
-    font-size: 144px;
-    margin: 0;
-    height: 160px;
-    line-height: 160px;
+  font-size: 94px;
+  margin: 0;
+  height: 160px;
+  line-height: 160px;
 }
-
-
 
 .tile {
-    height: 192px;
-    font-size: 24px;
-    font-weight: bold;
-  }
+  height: 192px;
+  font-size: 24px;
+  font-weight: bold;
+}
 
 .tile-row {
-    width: calc(160px * 3);
-    height: calc(192px * 3);
+  width: calc(160px * 3);
+  height: calc(192px * 3);
 }
 
 .player1-hands-cards,
 .player2-hands-cards {
-    /* height: calc(112px * 5); */
-    width: 162px;
-    margin: 3px 0;
-    font-size: 24px;
-    transform: scale(1);
+  /* height: calc(112px * 5); */
+  width: 162px;
+  margin: 3px 0;
+  font-size: 24px;
+  transform: scale(1);
 }
 
 .player1-hands-cards {
-    /* background-color: blue; */
-    color: white;
+  /* background-color: blue; */
+  color: white;
 }
 
 .player1-hands-cards.playing:hover,
 .player2-hands-cards.playing:hover {
-   transform: scale(1.3);
-    
+  transform: scale(1.3);
 }
-
 
 .player2-hands-cards {
-    /* background-color: red; */
-    color: white;
+  /* background-color: red; */
+  color: white;
 }
 
-
 .player-hands {
-    width: 300px;
-    margin: 0 50px 100px 50px;
-    height: 1000px;
+  width: 300px;
+  margin: 0 50px 100px 50px;
+  height: 1000px;
 }
 
 .color-red {
-    background-color: red;
-    color: white;
+  background-color: red;
+  color: white;
 }
 
 .color-blue {
-    background-color: blue;
-    color: white;
+  background-color: blue;
+  color: white;
 }
 
 .big {
-    transform: scale(1.3);
+  transform: scale(1.3);
+}
+
+@media screen and (max-width: 640px) {
+  body {
+    zoom: 0.3;
+    background-size: 600%;
+  }
+  #main-board {
+    background-size: cover;
+    background-position-x: 25px;
+    height: 710px;
+    width: 560px;
+  }
 }

@@ -1,92 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Triple Triad</title>
-    
+
     <!-- Font -->
-    <link rel="preconnect" href="https://fonts.googleapis.com"> 
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
-    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=VT323&display=swap"
+      rel="stylesheet"
+    />
 
     <!-- Link to Bootstratp -->
-    <link 
-        rel="stylesheet" 
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous"
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
+      integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
+      crossorigin="anonymous"
     />
 
     <!-- Linking the styles -->
-    <link rel="stylesheet" href="./assets/styles/style.css">
-</head>
+    <link rel="stylesheet" href="./assets/styles/style.css" />
+  </head>
 
-<body 
+  <body
     id="game-content"
     class="
-        container
-        d-flex
-        flex-column
-        justify-content-center
-        align-items-center
-        game-content">
-
-
+      container
+      d-flex
+      flex-column
+      justify-content-start
+      align-items-center
+      game-content
+    "
+  >
     <div class="game-title d-flex justify-content-center">
-        <h1>Triple Triad</h1> 
+      <h1>Triple Triad</h1>
     </div>
-    <div class="game-info d-flex justify-content-between align-items-center mb-3">
-        <div class="score">
-            <h2>Player 2</h2>
-            <p><span id="score2">5</span></p>
-        </div>
-        <div class="turn color-blue player1">
-            <p id="turn">P1 Turn</p>
-            <p id="card-selected">Select a card</p>
-        </div>
-        <div class="score">
-            <h2>Player 1</h2>
-            <p><span id="score1">5</span></p>
-        </div>
+    <div
+      class="game-info d-flex justify-content-between align-items-center mb-3"
+    >
+      <div class="score">
+        <h2>Player 2</h2>
+        <p><span id="score2">5</span></p>
+      </div>
+      <div class="turn color-blue player1">
+        <p id="turn">P1 Turn</p>
+        <p id="card-selected">Select a card</p>
+      </div>
+      <div class="score">
+        <h2>Player 1</h2>
+        <p><span id="score1">5</span></p>
+      </div>
     </div>
-    
-    <div class="board-area d-flex align-items-center">
-        
-        <div id="player2-hands" class="row d-flex flex-column justify-content-center align-items-center player-hands">
-            <div card="0" class="col text-center player2-hands-cards"></div>
-            <div card="1" class="col text-center player2-hands-cards"></div>
-            <div card="2" class="col text-center player2-hands-cards"></div>
-            <div card="3" class="col text-center player2-hands-cards"></div>
-            <div card="4" class="col text-center player2-hands-cards"></div>
-        </div>
-        
-        <div id="main-board" class="row tile-row d-flex justify-content-between align-items-center">
-            <div id="0" class="col-4 text-center tile"></div>
-            <div id="1" class="col-4 text-center tile"></div>
-            <div id="2" class="col-4 text-center tile"></div>
-            <div id="3" class="col-4 text-center tile"></div>
-            <div id="4" class="col-4 text-center tile"></div>
-            <div id="5" class="col-4 text-center tile"></div>
-            <div id="6" class="col-4 text-center tile"></div>
-            <div id="7" class="col-4 text-center tile"></div>
-            <div id="8" class="col-4 text-center tile"></div>
-        </div>
-        
-        <div id="player1-hands" class="row d-flex flex-column justify-content-center align-items-center player-hands">
-            <div card="0" class="col text-center player1-hands-cards playing"></div>
-            <div card="1" class="col text-center player1-hands-cards playing"></div>
-            <div card="2" class="col text-center player1-hands-cards playing"></div>
-            <div card="3" class="col text-center player1-hands-cards playing"></div>
-            <div card="4" class="col text-center player1-hands-cards playing"></div>
-        </div>
-    </div>  
 
-    
-    
-    
+    <div class="board-area d-flex align-items-center">
+      <div
+        id="player2-hands"
+        class="
+          row
+          d-flex
+          flex-column
+          justify-content-center
+          align-items-center
+          player-hands
+        "
+      >
+        <div card="0" class="col text-center player2-hands-cards"></div>
+        <div card="1" class="col text-center player2-hands-cards"></div>
+        <div card="2" class="col text-center player2-hands-cards"></div>
+        <div card="3" class="col text-center player2-hands-cards"></div>
+        <div card="4" class="col text-center player2-hands-cards"></div>
+      </div>
+
+      <div
+        id="main-board"
+        class="row tile-row d-flex justify-content-between align-items-center"
+      >
+        <div id="0" class="col-4 text-center tile"></div>
+        <div id="1" class="col-4 text-center tile"></div>
+        <div id="2" class="col-4 text-center tile"></div>
+        <div id="3" class="col-4 text-center tile"></div>
+        <div id="4" class="col-4 text-center tile"></div>
+        <div id="5" class="col-4 text-center tile"></div>
+        <div id="6" class="col-4 text-center tile"></div>
+        <div id="7" class="col-4 text-center tile"></div>
+        <div id="8" class="col-4 text-center tile"></div>
+      </div>
+
+      <div
+        id="player1-hands"
+        class="
+          row
+          d-flex
+          flex-column
+          justify-content-center
+          align-items-center
+          player-hands
+        "
+      >
+        <div card="0" class="col text-center player1-hands-cards playing"></div>
+        <div card="1" class="col text-center player1-hands-cards playing"></div>
+        <div card="2" class="col text-center player1-hands-cards playing"></div>
+        <div card="3" class="col text-center player1-hands-cards playing"></div>
+        <div card="4" class="col text-center player1-hands-cards playing"></div>
+      </div>
+    </div>
+
     <!-- Linking JS -->
     <script src="./assets/scripts/game.js"></script>
     <script src="./assets/scripts/index.js"></script>
-
-</body>
+  </body>
 </html>
