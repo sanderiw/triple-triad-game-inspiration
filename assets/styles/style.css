@@ -1,5 +1,8 @@
 html {
-  zoom: 0.5;
+  zoom: 0.6;
+  -moz-transform: scale(0.8);
+  -webkit-transform: scale(0.8);
+  transform: scale(0.8);
 }
 
 body {
@@ -35,7 +38,7 @@ body {
   font-size: 112px;
   margin-bottom: 30px;
   margin-top: 10px;
-  width: 100vw;
+  width: 100%;
   text-align: center;
 }
 
@@ -153,6 +156,11 @@ body {
   body {
     background-size: 600%;
   }
+
+  .game-title h1 {
+    width: 600px !important;
+  }
+
   #main-board {
     background-size: cover;
     background-position-x: 25px;
